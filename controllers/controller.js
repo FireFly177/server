@@ -100,3 +100,37 @@ export async function dropUser(req, res) {
         res.json({error})
     }
 }
+export async function updateUserRole(req, res) {
+    try {
+        const { username, role } = req.body;
+        if (!username || !role) {
+            throw new Error('Username or role not provided');
+        }
+        const updatedUser = await Users.findOneAndUpdate(
+            { username: username },
+            { role: role },
+            { new: true }
+        );
+        if (!updatedUser) {
+            throw new Error('User not found');
+        }
+        res.json('User role updated successfully');
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+export async function deleteUser(req, res) {
+    try {
+        const { username } = req.body;
+        if (!username) {
+            throw new Error('Username not provided');
+        }
+        const deletedUser = await Users.findOneAndDelete({ username: username });
+        if (!deletedUser) {
+            throw new Error('User not found');
+        }
+        res.json('User deleted successfully');
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
