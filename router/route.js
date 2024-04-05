@@ -20,6 +20,10 @@ router.route('/users')
         .get(controller.getUser)
         .post(controller.storeUser)
         .delete(controller.dropUser)
+        .put(controller.updateUserRole)
 
+router.route('/users/delete')
+        .delete(controller.deleteUser)
+        
 
 export default router;
